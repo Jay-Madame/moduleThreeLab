@@ -1,0 +1,4 @@
+Math 85 100 1
+Science 90 100 0
+History 78 100 1
+Art 92 100 1
