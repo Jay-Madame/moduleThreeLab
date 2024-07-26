@@ -5,10 +5,10 @@
 #include <string>
 #include <vector>
 
-// const
+// Constructor
 Category::Category(std::string name) : nameOfCategory(name) {}
 
-// adding assignments
+// Adding assignments
 void Category::addAssignment(Assignment newAssignment)
 {
     assignments.push_back(newAssignment);
@@ -20,20 +20,21 @@ void Category::addAssignment(const std::string &filename)
     assignments.push_back(newAssignment);
 }
 
-// weight of category
+// Weight of category
 void Category::changeWeightOfCategory(double numCategory)
 {
     weightOfCategory = numCategory;
 }
+
 double Category::getWeightOfCategory() const
 {
     return weightOfCategory;
 }
 
-// assignments
+// Assignments
 int Category::assignmentsCompleted()
 {
-    int completed;
+    int completed = 0; // Initialize to 0
     for (int i = 0; i < assignments.size(); i++)
     {
         if (assignments[i].isCompleted())
@@ -46,17 +47,16 @@ int Category::assignmentsCompleted()
 
 int Category::assignmentsLeft()
 {
-    int left;
-    left = assignments.size() - assignmentsCompleted();
+    int left = assignments.size() - assignmentsCompleted();
     return left;
 }
 
-std::vector<Assignment> Category::unfinishedAssignments()
+std::vector<Assignment> Category::unfinishedAssignments() const
 {
     std::vector<Assignment> unFinAssignments;
     for (int i = 0; i < assignments.size(); i++)
     {
-        if (!(assignments[i].isCompleted()))
+        if (!assignments[i].isCompleted())
         {
             unFinAssignments.push_back(assignments[i]);
         }
@@ -64,7 +64,7 @@ std::vector<Assignment> Category::unfinishedAssignments()
     return unFinAssignments;
 }
 
-// grades
+// Grades
 double Category::totalPoints() const
 {
     double pointsPossible = 0.0;
@@ -74,6 +74,7 @@ double Category::totalPoints() const
     }
     return pointsPossible;
 }
+
 double Category::totalGrade() const
 {
     double gradeEarned = 0.0;
@@ -84,8 +85,9 @@ double Category::totalGrade() const
         gradeEarned += assignment.getGradeEarned();
         totalPoints += assignment.getGradePossible();
     }
-    return (gradeEarned / totalPoints);
+    return (totalPoints > 0) ? (gradeEarned / totalPoints) : 0;
 }
+
 double Category::currentGrade() const
 {
     double gradeEarned = 0.0;
@@ -98,7 +100,7 @@ double Category::currentGrade() const
             totalPoints += assignment.getGradePossible();
         }
     }
-    return (gradeEarned / totalPoints);
+    return (totalPoints > 0) ? (gradeEarned / totalPoints) : 0;
 }
 
 double Category::potentialGrade() const
@@ -107,26 +109,27 @@ double Category::potentialGrade() const
     double totalPoints = 0.0;
     for (const auto &assignment : assignments)
     {
-        if (!(assignment.isCompleted()))
+        if (!assignment.isCompleted())
         {
             gradeEarned += assignment.getGradeEarned();
             totalPoints += assignment.getGradePossible();
         }
     }
-    return (gradeEarned / totalPoints);
+    return (totalPoints > 0) ? (gradeEarned / totalPoints) : 0;
 }
 
-// name of category
+// Name of category
 std::string Category::getName() const
 {
     return nameOfCategory;
 }
 
-// ostream overload
+// Ostream overload
 std::vector<Assignment> Category::getAssignments() const
 {
     return assignments;
 }
+
 std::ostream &operator<<(std::ostream &strm, const Category &obj)
 {
     std::vector<Assignment> tempAssignments = obj.getAssignments();
@@ -143,5 +146,7 @@ std::ostream &operator<<(std::ostream &strm, const Category &obj)
          << "Unfinished assignments (" << std::to_string(obj.assignmentsLeft()) << ") :\n";
     for (int i = 0; i < unFinishedAssignmnts.size(); i++)
     {
+        strm << (i + 1) << ". " << unFinishedAssignmnts[i] << "\n";
     }
-    <<
+    return strm;
+}
