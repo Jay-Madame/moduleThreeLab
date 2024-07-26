@@ -23,15 +23,24 @@ Assignment::Assignment(const std::string &filename)
         std::cout << "Unable to open file: " << filename << std::endl;
     }
 }
-std::string Assignment::getName() const {
+std::string Assignment::getName() const
+{
     return name;
 }
-double Assignment::getGradeEarned() const {
+double Assignment::getGradeEarned() const
+{
     return gradeEarned;
 }
-bool Assignment::isCompleted() const {
+bool Assignment::isCompleted() const
+{
     return completed;
 }
-double Assignment::getGradePossible() const {
+double Assignment::getGradePossible() const
+{
     return gradePossible;
+}
+
+std::ostream &operator<<(std::ostream &strm, const Assignment &obj)
+{
+    strm <<
 }

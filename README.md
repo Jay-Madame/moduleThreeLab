@@ -9,11 +9,11 @@
 
 The purpose of this application is to track and calculate grades, both completed and not completed.
 
-[ ] __Assignments__
-    [ ] Grade on assignment
-    [ ] Completed
-    [ ] Total potential points
-    [ ] Read in assignments from a file
+[x] __Assignments__
+    [x] Grade on assignment
+    [x] Completed
+    [x] Total potential points
+    [x] Read in assignments from a file
 
 [ ] __Category__
     [ ] Vector of assignments

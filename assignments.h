@@ -7,7 +7,7 @@ class Assignment
 private:
     std::string name;
     double gradeEarned, gradePossible;
-    bool completed;
+    bool complete
 
 public:
     Assignment(std::string n, double gEarned, double gPossible, bool isCompleted);
@@ -16,4 +16,5 @@ public:
     double getGradeEarned() const;
     bool isCompleted() const;
     double getGradePossible() const;
+    friend std::ostream &operator<<(std::ostream &strm, const Assignment &obj);
 };
