@@ -16,10 +16,10 @@ The purpose of this application is to track and calculate grades, both completed
     [x] Read in assignments from a file
 
 [ ] __Category__
-    [ ] Vector of assignments
-        [ ] Name of assignment
-        [ ] Is it complete
-        [ ] Grade/expected grade
+    [x] Vector of assignments
+        [x] Name of assignment
+        [x] Is it complete
+        [x] Grade/expected grade
     [ ] Weight of category
     [ ] Total grade of assignments
     [ ] Total potential points
