@@ -16,8 +16,26 @@ void Category::addAssignment(Assignment newAssignment)
 
 void Category::addAssignment(const std::string &filename)
 {
-    Assignment newAssignment(filename);
-    assignments.push_back(newAssignment);
+    std::ifstream file(filename);
+
+    if (file.is_open())
+    {
+        std::string nm;
+        double gEarned, gPossible;
+        bool isCom;
+
+        while (file >> nm >> gEarned >> gPossible >> isCom)
+        {
+            Assignment newAssignment(nm, gEarned, gPossible, isCom);
+            assignments.push_back(newAssignment);
+        }
+
+        file.close();
+    }
+    else
+    {
+        std::cout << "Unable to open file: " << filename << std::endl;
+    }
 }
 
 // Weight of category
@@ -85,7 +103,7 @@ double Category::totalGrade() const
         gradeEarned += assignment.getGradeEarned();
         totalPoints += assignment.getGradePossible();
     }
-    return (totalPoints > 0) ? (gradeEarned / totalPoints) : 0;
+    return (totalPoints > 0) ? ((gradeEarned / totalPoints)*100) : 0;
 }
 
 double Category::currentGrade() const
@@ -100,7 +118,7 @@ double Category::currentGrade() const
             totalPoints += assignment.getGradePossible();
         }
     }
-    return (totalPoints > 0) ? (gradeEarned / totalPoints) : 0;
+    return (totalPoints > 0) ? ((gradeEarned / totalPoints)*100) : 0;
 }
 
 double Category::potentialGrade() const
@@ -115,7 +133,7 @@ double Category::potentialGrade() const
             totalPoints += assignment.getGradePossible();
         }
     }
-    return (totalPoints > 0) ? (gradeEarned / totalPoints) : 0;
+    return (totalPoints > 0) ? ((gradeEarned / totalPoints)*100) : 0;
 }
 
 // Name of category
@@ -132,17 +150,19 @@ std::vector<Assignment> Category::getAssignments() const
 
 std::ostream &operator<<(std::ostream &strm, const Category &obj)
 {
-    std::vector<Assignment> tempAssignments = obj.getAssignments();
+    std::vector<Assignment> allAssignments = obj.getAssignments();
     std::vector<Assignment> unFinishedAssignmnts = obj.unfinishedAssignments();
+
+    // actual printing
     strm << "Name of Category: " << obj.getName() << "\n";
-    for (int i = 0; i < tempAssignments.size(); i++)
+    for (int i = 0; i < allAssignments.size(); i++)
     {
-        Assignment tempValue = tempAssignments[i];
+        Assignment tempValue = allAssignments[i];
         strm << (i + 1) << ". "
-             << tempValue << "\t" << (tempValue.getGradeEarned() / tempValue.getGradePossible())
+             << tempValue << "\t" << ((tempValue.getGradeEarned() / tempValue.getGradePossible()) * 100)
              << "% \n";
     }
-    strm << "Total points: " << obj.totalPoints() << "\n"
+    strm << "Total points: " << obj.totalPoints() << "\n\n"
          << "Unfinished assignments (" << std::to_string(obj.assignmentsLeft()) << ") :\n";
     for (int i = 0; i < unFinishedAssignmnts.size(); i++)
     {

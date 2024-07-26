@@ -2,27 +2,7 @@
 #include <iostream>
 #include <fstream>
 
-Assignment::Assignment(std::string n, double gEarned, double gPossible, bool isCompleted) {}
-Assignment::Assignment(const std::string &filename)
-{
-    std::ifstream file(filename);
-
-    if (file.is_open())
-    {
-        std::string nm;
-        double gEarned, gPossible;
-        bool isCom;
-        while (file >> nm >> gEarned >> gPossible >> isCom)
-        {
-            Assignment(nm, gEarned, gPossible, isCom);
-        }
-        file.close();
-    }
-    else
-    {
-        std::cout << "Unable to open file: " << filename << std::endl;
-    }
-}
+Assignment::Assignment(std::string n, double gEarned, double gPossible, bool isCompleted) : name(n), gradeEarned(gEarned), gradePossible(gPossible), complete(isCompleted) {}
 std::string Assignment::getName() const
 {
     return name;
@@ -42,6 +22,6 @@ double Assignment::getGradePossible() const
 
 std::ostream &operator<<(std::ostream &strm, const Assignment &obj)
 {
-    strm << "Assignment name " << obj.getName() << std::endl;
+    strm << "Assignment name: " << obj.getName() << std::endl;
     return strm;
 }

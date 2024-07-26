@@ -11,7 +11,6 @@ private:
 
 public:
     Assignment(std::string n, double gEarned, double gPossible, bool isCompleted);
-    Assignment(const std::string &filename);
     std::string getName() const;
     double getGradeEarned() const;
     bool isCompleted() const;

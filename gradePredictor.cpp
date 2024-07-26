@@ -41,5 +41,6 @@ void testCategory()
     Assignment newAssignment(name, pEarned, pPoss, comp);
     newCategory.addAssignment(newAssignment);
     std::vector<Assignment> tempAssignments = newCategory.getAssignments();
-    std::cout << newCategory;
+    std::cout << "\n"
+              << newCategory;
 }
