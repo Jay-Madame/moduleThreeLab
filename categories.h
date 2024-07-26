@@ -28,8 +28,16 @@ public:
     Category(std::string name);
     void addAssignment(Assignment newAssignment);
     void addAssignment(const std::string &filename);
-    double changeWeightOfCategory(double numCategory);
-    double totalGrade();
+    void changeWeightOfCategory(double numCategory);
+    double getWeightOfCategory() const;
+    int assignmentsCompleted();
+    int assignmentsLeft();
+    std::vector<Assignment> unfinishedAssignments();
+    double totalPoints() const;
+    double totalGrade() const;
+    double currentGrade() const;
+    double potentialGrade() const;
+    std::string getName() const;
     std::vector<Assignment> getAssignments() const;
     friend std::ostream &operator<<(std::ostream &strm, const Category &obj);
 };

@@ -7,7 +7,7 @@ class Assignment
 private:
     std::string name;
     double gradeEarned, gradePossible;
-    bool complete
+    bool complete;
 
 public:
     Assignment(std::string n, double gEarned, double gPossible, bool isCompleted);

@@ -33,7 +33,7 @@ double Assignment::getGradeEarned() const
 }
 bool Assignment::isCompleted() const
 {
-    return completed;
+    return complete;
 }
 double Assignment::getGradePossible() const
 {
@@ -42,5 +42,6 @@ double Assignment::getGradePossible() const
 
 std::ostream &operator<<(std::ostream &strm, const Assignment &obj)
 {
-    strm <<
+    strm << "Assignment name " << obj.getName() << std::endl;
+    return strm;
 }
