@@ -7,13 +7,13 @@
 
 /*
     [ ] __Category__
-    [ ] Vector of assignments
-        [ ] Name of assignment
-        [ ] Grade/expected grade
-        [ ] is it completed
-    [ ] Weight of category
-    [ ] Total grade of assignments
-    [ ] Total potential points
+    [X] Vector of assignments
+        [X] Name of assignment
+        [X] Grade/expected grade
+        [X] is it completed
+    [X] Weight of category
+    [X] Total grade of assignments
+    [X] Total potential points
     [ ] Return final grade
 */
 
@@ -30,9 +30,9 @@ public:
     void addAssignment(const std::string &filename);
     void changeWeightOfCategory(double numCategory);
     double getWeightOfCategory() const;
-    int assignmentsCompleted();
-    int assignmentsLeft();
-    std::vector<Assignment> unfinishedAssignments();
+    int assignmentsCompleted() const;
+    int assignmentsLeft() const;
+    std::vector<Assignment> unfinishedAssignments() const;
     double totalPoints() const;
     double totalGrade() const;
     double currentGrade() const;

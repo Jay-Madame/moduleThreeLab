@@ -32,7 +32,7 @@ double Category::getWeightOfCategory() const
 }
 
 // Assignments
-int Category::assignmentsCompleted()
+int Category::assignmentsCompleted() const
 {
     int completed = 0; // Initialize to 0
     for (int i = 0; i < assignments.size(); i++)
@@ -45,7 +45,7 @@ int Category::assignmentsCompleted()
     return completed;
 }
 
-int Category::assignmentsLeft()
+int Category::assignmentsLeft() const
 {
     int left = assignments.size() - assignmentsCompleted();
     return left;
