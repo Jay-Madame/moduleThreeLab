@@ -1,73 +1,80 @@
 #include "grades.h"
+#include "categories.h"
+#include <iomanip>
+#include <vector>
 
-std::vector<Category> Grades::getCategories() const
-{
+std::vector<Category> Grades::getCategories() const {
     return categories;
 }
-void Grades::addCategory(std::string name, double weight)
-{
+
+void Grades::addCategory(std::string name, double weight) {
     Category newCategory(name);
     newCategory.changeWeightOfCategory(weight);
     categories.push_back(newCategory);
 }
-int Grades::howManyCompletedAssignments() const
-{
+
+int Grades::howManyCompletedAssignments() const {
     int total = 0;
-    for (const auto &category : categories)
-    {
+    for (const auto &category : categories) {
         total += category.assignmentsCompleted();
     }
     return total;
 }
-double Grades::getCurrentGrade() const
-{
-    double grade;
-    for (const auto &category : categories)
-    {
-        grade += (category.currentGrade() * category.getWeightOfCategory());
+
+double Grades::getCurrentGrade() const {
+    double totalWeightedGrade = 0.0;
+    double totalWeight = 0.0;
+    for (const auto &category : categories) {
+        double categoryGrade = category.currentGrade();
+        double weight = category.getWeightOfCategory();
+        totalWeightedGrade += categoryGrade * weight;
+        totalWeight += weight;
     }
-    return grade;
+    return (totalWeight > 0) ? (totalWeightedGrade / totalWeight) : 0.0;
 }
-int Grades::howManyAssignmentsLeft() const
-{
+
+int Grades::howManyAssignmentsLeft() const {
     int total = 0;
-    for (const auto &category : categories)
-    {
+    for (const auto &category : categories) {
         total += category.assignmentsLeft();
     }
     return total;
 }
-double Grades::getProjectedGradeForLeftovers() const
-{
-    double grade;
-    for (const auto &category : categories)
-    {
-        grade += (category.potentialGrade() * category.getWeightOfCategory());
+
+double Grades::getProjectedGradeForLeftovers() const {
+    double totalWeightedPotential = 0.0;
+    double totalWeight = 0.0;
+    for (const auto &category : categories) {
+        double potentialGrade = category.potentialGrade();
+        double weight = category.getWeightOfCategory();
+        totalWeightedPotential += potentialGrade * weight;
+        totalWeight += weight;
     }
-    return grade;
+    return (totalWeight > 0) ? (totalWeightedPotential / totalWeight) : 0.0;
 }
-double Grades::getProjectedGradeForClass() const
-{
-    double grade;
-    for (const auto &category : categories)
-    {
-        grade += (category.totalGrade() * category.getWeightOfCategory());
+
+double Grades::getProjectedGradeForClass() const {
+    double totalWeightedGrade = 0.0;
+    for (const auto &category : categories) {
+        totalWeightedGrade += category.totalGrade() * category.getWeightOfCategory();
     }
-    return grade;
+    return totalWeightedGrade;
 }
-std::ostream &operator<<(std::ostream &strm, const Grades &obj)
-{
-    std::vector<Category> tempCategories = obj.getCategories();
+
+std::ostream &operator<<(std::ostream &strm, const Grades &obj) {
+    const auto &categories = obj.getCategories();
     int i = 1;
-    for (const auto &category : tempCategories)
-    { 
-        strm << "Name of Category "<< i <<" : " << category.getName() <<"\n"
-        << "Total Weight: " << std::fixed << std::setprecision(2) << (100*category.getWeightOfCategory()) <<"%\n";
+    for (const auto &category : categories) {
+        strm << "Name of Category " << i++ << ": " << category.getName() << "\n"
+             << "Total Weight: " << std::fixed << std::setprecision(2)
+             << (100 * category.getWeightOfCategory()) << "%\n";
     }
-    strm<< "\nAssingments completed: " <<obj.howManyCompletedAssignments() <<"\n"
-    << "Current Grade: " << obj.getCurrentGrade() << "\n"
-    << "Assignments Remaining: " << obj.howManyAssignmentsLeft() << "\n"
-    << "Projected Grade on Remaining Assignments: " << obj.getProjectedGradeForLeftovers() << "\n"
-    << "Predicted Grade for the class: " << obj.getProjectedGradeForClass()<<"\n";
+    strm << "\nAssignments completed: " << obj.howManyCompletedAssignments() << "\n"
+         << "Current Grade: " << std::fixed << std::setprecision(2) << obj.getCurrentGrade() << "\n"
+         << "Assignments Remaining: " << obj.howManyAssignmentsLeft() << "\n"
+         << "Projected Grade on Remaining Assignments: " << std::fixed << std::setprecision(2)
+         << obj.getProjectedGradeForLeftovers() << "\n"
+         << "Predicted Grade for the class: " << std::fixed << std::setprecision(2)
+         << obj.getProjectedGradeForClass() << "\n";
     return strm;
 }

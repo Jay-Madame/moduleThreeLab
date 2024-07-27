@@ -120,18 +120,17 @@ void testGrades()
             else
             {
                 valid = false;
-                break;
             }
-            std::cout << "Would you like to add another category? (y/n) ";
-            std::cin >> ans;
-            if (ans == "y")
-            {
-                validOut = true;
-            }
-            else
-            {
-                validOut = false;
-            }
+        }
+        std::cout << "Would you like to add another category? (y/n) ";
+        std::cin >> ans;
+        if (ans == "y")
+        {
+            validOut = true;
+        }
+        else
+        {
+            validOut = false;
         }
         std::cout << "\n"
                   << math;
