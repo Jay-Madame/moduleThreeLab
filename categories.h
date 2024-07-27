@@ -14,7 +14,7 @@
     [X] Weight of category
     [X] Total grade of assignments
     [X] Total potential points
-    [ ] Return final grade
+    [X] Return final grade
 */
 
 class Category

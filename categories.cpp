@@ -43,6 +43,7 @@ void Category::addAssignment(const std::string &filename)
 void Category::changeWeightOfCategory(double numCategory)
 {
     weightOfCategory = numCategory;
+    weightOfCategory/=100;
 }
 
 double Category::getWeightOfCategory() const
