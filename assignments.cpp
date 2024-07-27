@@ -22,6 +22,6 @@ double Assignment::getGradePossible() const
 
 std::ostream &operator<<(std::ostream &strm, const Assignment &obj)
 {
-    strm << "Assignment name: " << obj.getName() << std::endl;
+    strm << "Assignment name: " << obj.getName();
     return strm;
 }

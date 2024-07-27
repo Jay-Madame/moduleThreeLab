@@ -4,6 +4,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <iomanip>
 
 // Constructor
 Category::Category(std::string name) : nameOfCategory(name) {}
@@ -103,7 +104,7 @@ double Category::totalGrade() const
         gradeEarned += assignment.getGradeEarned();
         totalPoints += assignment.getGradePossible();
     }
-    return (totalPoints > 0) ? ((gradeEarned / totalPoints)*100) : 0;
+    return (totalPoints > 0) ? ((gradeEarned / totalPoints) * 100) : 0;
 }
 
 double Category::currentGrade() const
@@ -118,7 +119,7 @@ double Category::currentGrade() const
             totalPoints += assignment.getGradePossible();
         }
     }
-    return (totalPoints > 0) ? ((gradeEarned / totalPoints)*100) : 0;
+    return (totalPoints > 0) ? ((gradeEarned / totalPoints) * 100) : 0;
 }
 
 double Category::potentialGrade() const
@@ -133,7 +134,7 @@ double Category::potentialGrade() const
             totalPoints += assignment.getGradePossible();
         }
     }
-    return (totalPoints > 0) ? ((gradeEarned / totalPoints)*100) : 0;
+    return (totalPoints > 0) ? ((gradeEarned / totalPoints) * 100) : 0;
 }
 
 // Name of category
@@ -152,15 +153,22 @@ std::ostream &operator<<(std::ostream &strm, const Category &obj)
 {
     std::vector<Assignment> allAssignments = obj.getAssignments();
     std::vector<Assignment> unFinishedAssignmnts = obj.unfinishedAssignments();
-
     // actual printing
     strm << "Name of Category: " << obj.getName() << "\n";
     for (int i = 0; i < allAssignments.size(); i++)
     {
         Assignment tempValue = allAssignments[i];
         strm << (i + 1) << ". "
-             << tempValue << "\t" << ((tempValue.getGradeEarned() / tempValue.getGradePossible()) * 100)
-             << "% \n";
+             << tempValue;
+        if (!(tempValue.isCompleted()))
+        {
+            strm << "\t-\n";
+        }
+        else
+        {
+            strm << "\t" << std::fixed << std::setprecision(2) << ((tempValue.getGradeEarned() / tempValue.getGradePossible()) * 100)
+                 << "% \n";
+        }
     }
     strm << "Total points: " << obj.totalPoints() << "\n\n"
          << "Unfinished assignments (" << std::to_string(obj.assignmentsLeft()) << ") :\n";
@@ -168,5 +176,7 @@ std::ostream &operator<<(std::ostream &strm, const Category &obj)
     {
         strm << (i + 1) << ". " << unFinishedAssignmnts[i] << "\n";
     }
+    strm << "Expected Score on unfinished assignments: " << std::fixed << std::setprecision(2) << (obj.potentialGrade()) << "%\n"
+         << "Predicted Final Category Grade: " << std::fixed << std::setprecision(2) << obj.totalGrade() << "%\n";
     return strm;
 }
